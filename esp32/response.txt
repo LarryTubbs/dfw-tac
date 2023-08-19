@@ -1,0 +1,14 @@
+HTTP/1.1 200 OK
+Content-Length: 405
+Content-Type: application/json
+Content-MD5: J6cyOTEHVvrx0NMYomYCzA==
+Last-Modified: Sat, 19 Aug 2023 16:10:20 GMT
+Accept-Ranges: bytes
+ETag: "0x8DBA0CEC920705C"
+Server: Windows-Azure-Web/1.0 Microsoft-HTTPAPI/2.0
+x-ms-request-id: c10f3bb4-c01e-0152-3cdb-d2eff1000000
+x-ms-version: 2018-03-28
+Date: Sat, 19 Aug 2023 20:23:48 GMT
+Connection: close
+
+{"KSEP": "VFR", "KLUD": "VFR", "KLNC": "VFR", "KJWY": "VFR", "KINJ": "VFR", "KGLE": "VFR", "KGDJ": "VFR", "KF46": "VFR", "KF00": "VFR", "KCPT": "VFR", "K0F2": "VFR", "KXBP": "VFR", "KGVT": "VFR", "KRBD": "VFR", "KMWL": "VFR", "KGKY": "VFR", "KFTW": "VFR", "KDTO": "VFR", "KDFW": "VFR", "KDAL": "VFR", "KAFW": "VFR", "KNFW": "VFR", "KHQZ": "VFR", "KGYI": "VFR", "KGPM": "VFR", "KFWS": "VFR", "KADS": "VFR"}
