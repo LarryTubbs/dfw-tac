@@ -4,7 +4,6 @@ import time
 import pixutils
 import machine
 import neopixel
-# import urequests as requests
 import socket
 import json
 
@@ -14,13 +13,14 @@ STATIONS = ['K0F2', 'KGLE', 'KGYI', 'KF00', 'KXBP', 'KLUD', 'KDTO', 'KTKI', 'KGV
             'KF46', 'KFTW', 'KDFW', 'KDAL', 'KMWL', 'KNFW', 'KGKY', 'KGPM', 'KRBD', 'KHQZ', 'KFWS', 
             'KLNC', 'KGDJ', 'KCPT', 'KSEP', 'KINJ']
 SLEEP_MIN = 5
+INTENSITY = 8  # 1 full bright, 2 dimmer, 4 even dimmer, 8 even dimmer 
 
 def getColor(flightCategory):
     colors = {
-        'LIFR': (255,0,255),
-        'IFR': (255,0,0),
-        'MVFR': (0,0,255),
-        'VFR': (0,255,0)
+        'LIFR': (255 // INTENSITY,0,255 // INTENSITY),
+        'IFR': (255 // INTENSITY,0,0),
+        'MVFR': (0,0,255 // INTENSITY),
+        'VFR': (0,255 // INTENSITY,0)
     }
 
     color = ""
