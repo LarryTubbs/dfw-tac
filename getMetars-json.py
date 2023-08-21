@@ -2,6 +2,7 @@
 import json
 import requests
 import xml.etree.ElementTree as ET
+import uploadMetars
 
 stations = ['K0F2', 'KGLE', 'KGYI', 'KF00', 'KXBP', 'KLUD', 'KDTO', 'KTKI', 'KGVT', 'KAFW', 'KADS', 
             'KF46', 'KFTW', 'KDFW', 'KDAL', 'KMWL', 'KNFW', 'KGKY', 'KGPM', 'KRBD', 'KHQZ', 'KFWS', 
@@ -84,11 +85,12 @@ def main():
     # store news items in a json file
     saveToJson(metars, 'metars.json')
 
+    uploadMetars.uploadMetars('metars.json')
     # test reading back object from file
-    with open('metars.json', 'r') as f:
-        foo = json.load(f)
-        print(foo)
-        print(foo['KDFW'])
+    # with open('metars.json', 'r') as f:
+    #     foo = json.load(f)
+    #     print(foo)
+    #     print(foo['KDFW'])
       
       
 if __name__ == "__main__":
