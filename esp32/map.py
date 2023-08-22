@@ -11,23 +11,23 @@ URL = 'http://lrtenigma.z21.web.core.windows.net/AviationWeather/metars.json'
 PIN = 23
 STATIONS = ['K0F2', 'KGLE', 'KGYI', 'KF00', 'KXBP', 'KLUD', 'KDTO', 'KTKI', 'KGVT', 'KAFW', 'KADS', 
             'KF46', 'KFTW', 'KDFW', 'KDAL', 'KMWL', 'KNFW', 'KGKY', 'KGPM', 'KRBD', 'KHQZ', 'KFWS', 
-            'KLNC', 'KGDJ', 'KCPT', 'KSEP', 'KINJ']
+            'KLNC', 'KGDJ', 'KCPT']
 SLEEP_MIN = 5
-INTENSITY = 8  # 1 full bright, 2 dimmer, 4 even dimmer, 8 even dimmer 
+ON = 25 # set to color intensity 1-255
 
 def getColor(flightCategory):
     colors = {
-        'LIFR': (255 // INTENSITY,0,255 // INTENSITY),
-        'IFR': (255 // INTENSITY,0,0),
-        'MVFR': (0,0,255 // INTENSITY),
-        'VFR': (0,255 // INTENSITY,0)
+        'LIFR': (ON,0,ON),
+        'IFR': (ON,0,0),
+        'MVFR': (0,0,ON),
+        'VFR': (0,ON,0)
     }
 
     color = ""
     try:
         color = colors[flightCategory]
     except KeyError:
-        color = (255,255,255)
+        color = (ON,ON,ON)
 
     return color
 
@@ -84,7 +84,7 @@ def main():
             try:
                 np[i] = getColor(metars[itm])
             except KeyError:
-                np[i] = (255, 255, 255)
+                np[i] = (ON, ON, ON)
             i += 1
         np.write()
         print('    map repainted')

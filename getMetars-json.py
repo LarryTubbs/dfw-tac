@@ -61,9 +61,12 @@ def parseXML(xmlfile):
 
   
         # append metar dictionary to metar items list
-        if metar['station_id'] in stations:
-            metars[metar['station_id']] = metar['flight_category']
-      
+        try:
+            if metar['station_id'] in stations:
+                metars[metar['station_id']] = metar['flight_category']
+        except KeyError:
+            metars[metar['station_id']] = ''
+            
     # return metar list
     return metars
   

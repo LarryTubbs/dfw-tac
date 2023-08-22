@@ -4,7 +4,7 @@ from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient
 
 def uploadMetars(filename):
     try:
-        print("Azure Blob Storage Python quickstart sample")
+        print("Starting uploadMetars function...")
 
         # Retrieve the connection string for use with the application. The storage
         # connection string is stored in an environment variable on the machine
