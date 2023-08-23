@@ -3,6 +3,9 @@ import json
 import requests
 import xml.etree.ElementTree as ET
 import uploadMetars
+import time
+
+DURATION = 10 # the amount of time in minutes to wait between uploads
 
 stations = ['K0F2', 'KGLE', 'KGYI', 'KF00', 'KXBP', 'KLUD', 'KDTO', 'KTKI', 'KGVT', 'KAFW', 'KADS', 
             'KF46', 'KFTW', 'KDFW', 'KDAL', 'KMWL', 'KNFW', 'KGKY', 'KGPM', 'KRBD', 'KHQZ', 'KFWS', 
@@ -63,21 +66,31 @@ def saveToJson(metars, filename):
   
       
 def main():
-    # load rss from web to update existing xml file
-    loadMETARs()
-  
-    # parse xml file
-    metars = parseXML('metars.xml')
-  
-    # store news items in a json file
-    saveToJson(metars, 'metars.json')
+    while True:
+        print('map refresh started at ', time.asctime())
 
-    uploadMetars.uploadMetars('metars.json')
-    # test reading back object from file
-    # with open('metars.json', 'r') as f:
-    #     foo = json.load(f)
-    #     print(foo)
-    #     print(foo['KDFW'])
+        # load rss from web to update existing xml file
+        print('\tretrieving metar files from the FAA...')
+        loadMETARs()
+        print('\tfile retrieved.')
+    
+        # parse xml file
+        print('\tparsing xml...')
+        metars = parseXML('metars.xml')
+        print('\txml file successfully parsed.')
+    
+        # store items in a json file
+        print("\textracting flight categories for the aiports on the map, and saving them to 'metars.json'...")
+        saveToJson(metars, 'metars.json')
+        print("\t'metars.json' successfully written.")
+
+        print("\tuploading 'metars.json' to azure...")
+        uploadMetars.uploadMetars('metars.json')
+        print("\t'metars.json successfully uploaded")
+        
+        print('map refresh completed at ', time.asctime())
+        print('will refresh again in %i minutes.' % DURATION)
+        time.sleep(DURATION * 60)
       
       
 if __name__ == "__main__":

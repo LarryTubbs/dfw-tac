@@ -4,8 +4,6 @@ from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient
 
 def uploadMetars(filename):
     try:
-        print("Starting uploadMetars function...")
-
         # Retrieve the connection string for use with the application. The storage
         # connection string is stored in an environment variable on the machine
         # running the application called AZURE_STORAGE_CONNECTION_STRING. If the environment variable is
@@ -21,7 +19,7 @@ def uploadMetars(filename):
         remote_file_name = 'AviationWeather\\' + filename
         blob_client = blob_service_client.get_blob_client(container='$web', blob= remote_file_name)
 
-        print("\nUploading to Azure Storage as blob:\n\t" + filename)
+        print("\tUploading to Azure Storage as blob:\n\t\t" + filename)
 
         # Upload the created file
         with open(file=filename, mode="rb") as data:
