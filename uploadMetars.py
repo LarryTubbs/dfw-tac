@@ -19,8 +19,6 @@ def uploadMetars(filename):
         remote_file_name = 'AviationWeather\\' + filename
         blob_client = blob_service_client.get_blob_client(container='$web', blob= remote_file_name)
 
-        print("\tUploading to Azure Storage as blob:\n\t\t" + filename)
-
         # Upload the created file
         with open(file=filename, mode="rb") as data:
             blob_client.upload_blob(data, overwrite=True)

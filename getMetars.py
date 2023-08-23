@@ -86,7 +86,7 @@ def main():
 
         print("\tuploading 'metars.json' to azure...")
         uploadMetars.uploadMetars('metars.json')
-        print("\t'metars.json successfully uploaded")
+        print("\t'metars.json' successfully uploaded")
         
         print('map refresh completed at ', time.asctime())
         print('will refresh again in %i minutes.' % DURATION)
