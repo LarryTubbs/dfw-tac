@@ -9,7 +9,7 @@ DURATION = 10 # the amount of time in minutes to wait between uploads
 
 stations = ['K0F2', 'KGLE', 'KGYI', 'KF00', 'KXBP', 'KLUD', 'KDTO', 'KTKI', 'KGVT', 'KAFW', 'KADS', 
             'KF46', 'KFTW', 'KDFW', 'KDAL', 'KMWL', 'KNFW', 'KGKY', 'KGPM', 'KRBD', 'KHQZ', 'KFWS', 
-            'KLNC', 'KGDJ', 'KCPT', 'KSEP', 'KINJ']
+            'KLNC', 'KGDJ', 'KCPT']
   
 def loadMETARs():
   
