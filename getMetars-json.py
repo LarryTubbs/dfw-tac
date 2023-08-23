@@ -21,22 +21,6 @@ def loadMETARs():
         f.write(resp.content)
           
 
-def getColor(flightCategory):
-    colors = {
-        'LIFR': (255,0,255),
-        'IFR': (255,0,0),
-        'MVFR': (0,0,255),
-        'VFR': (0,255,0)
-    }
-
-    color = ""
-    try:
-        color = colors[flightCategory]
-    except KeyError:
-        color = (0,0,0)
-
-    return color
-  
 def parseXML(xmlfile):
   
     # create element tree object
