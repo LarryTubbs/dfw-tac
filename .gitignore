@@ -2,3 +2,4 @@ __pycache__/
 metars.xml
 metars.json
 esp32/webrepl_cfg.py
+Dockerfile
