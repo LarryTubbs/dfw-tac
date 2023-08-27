@@ -1,7 +1,8 @@
 import time
 
-def cycle(np, rep_count = 4):
+def cycle(np, rep_count = 4, cycle_time = 60):
     n = np.n
+
  
     # cycle
     for i in range(rep_count * n):
@@ -9,9 +10,10 @@ def cycle(np, rep_count = 4):
             np[j] = (0, 0, 0)
         np[i % n] = (0, 255, 0)
         np.write()
-        time.sleep_ms(25)
+        time.sleep_ms(cycle_time)
+    clear(np)
 
-def bounce(np, rep_count = 4):
+def bounce(np, rep_count = 4, cycle_time = 60):
     n = np.n 
  
     # bounce
@@ -23,7 +25,8 @@ def bounce(np, rep_count = 4):
         else:
             np[n - 1 - (i % n)] = (0, 0, 0)
         np.write()
-        time.sleep_ms(60)
+        time.sleep_ms(cycle_time)
+    clear(np)
 
 def fade(np):
     n = np.n
@@ -36,6 +39,13 @@ def fade(np):
                 val = 255 - (i & 0xff)
             np[j] = (val, 0, 0)
         np.write()
+    clear(np)
+
+def all_on(np, color=(255, 255, 255)):
+    n = np.n
+    for i in range(n):
+        np[i] = color
+    np.write()
 
 def clear(np):
     n = np.n
