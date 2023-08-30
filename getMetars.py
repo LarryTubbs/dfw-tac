@@ -67,28 +67,34 @@ def saveToJson(metars, filename):
       
 def main():
     while True:
-        print('map refresh started at ', time.asctime())
+        try:
+            print('map refresh started at ', time.asctime())
 
-        # load rss from web to update existing xml file
-        print('\tretrieving metar files from the FAA...')
-        loadMETARs()
-        print('\tfile retrieved.')
-    
-        # parse xml file
-        print('\tparsing xml...')
-        metars = parseXML('metars.xml')
-        print('\txml file successfully parsed.')
-    
-        # store items in a json file
-        print("\textracting flight categories for the aiports on the map, and saving them to 'metars.json'...")
-        saveToJson(metars, 'metars.json')
-        print("\t'metars.json' successfully written.")
-
-        print("\tuploading 'metars.json' to azure...")
-        uploadMetars.uploadMetars('metars.json')
-        print("\t'metars.json' successfully uploaded")
+            # load rss from web to update existing xml file
+            print('\tretrieving metar files from the FAA...')
+            loadMETARs()
+            print('\tfile retrieved.')
         
-        print('map refresh completed at ', time.asctime())
+            # parse xml file
+            print('\tparsing xml...')
+            metars = parseXML('metars.xml')
+            print('\txml file successfully parsed.')
+        
+            # store items in a json file
+            print("\textracting flight categories for the aiports on the map, and saving them to 'metars.json'...")
+            saveToJson(metars, 'metars.json')
+            print("\t'metars.json' successfully written.")
+
+            print("\tuploading 'metars.json' to azure...")
+            uploadMetars.uploadMetars('metars.json')
+            print("\t'metars.json' successfully uploaded")
+            
+            print('map refresh completed at ', time.asctime())
+            
+        except Exception as ex:
+            print('\tException:\n\t' + ex)
+            print('refresh failed.')
+
         print('will refresh again in %i minutes.' % DURATION)
         time.sleep(DURATION * 60)
       
