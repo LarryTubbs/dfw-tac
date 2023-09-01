@@ -92,7 +92,7 @@ def main():
             print('map refresh completed at ', time.asctime())
             
         except Exception as ex:
-            print('\tException:\n\t' + ex)
+            print('\tException:\n\t' + str(ex))
             print('refresh failed.')
 
         print('will refresh again in %i minutes.' % DURATION)
