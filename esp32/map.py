@@ -9,11 +9,11 @@ import json
 
 URL = 'http://lrtenigma.z21.web.core.windows.net/AviationWeather/metars.json' 
 PIN = 23
-STATIONS = ['K0F2', 'KGLE', 'KGYI', 'KF00', 'KXBP', 'KLUD', 'KDTO', 'KTKI', 'KGVT', 'KAFW', 'KADS', 
-            'KF46', 'KFTW', 'KDFW', 'KDAL', 'KMWL', 'KNFW', 'KGKY', 'KGPM', 'KRBD', 'KHQZ', 'KFWS', 
-            'KLNC', 'KGDJ', 'KCPT']
+STATIONS = ['KCPT', 'KGDJ', 'KFWS', 'KGKY', 'KGPM', 'KRBD', 'KLNC', 'KHQZ', 'KF46', 'KADS', 'KDAL',  
+            'KDFW', 'KAFW', 'KFTW', 'KNFW', 'KMWL', 'KXBP', 'KLUD', 'KDTO', 'KTRI', 'KGVT', 'KF00',  
+            'KGYI', 'KGLE', 'K0F2']
 SLEEP_MIN = 5
-ON = 25 # set to color intensity 1-255
+ON = 255 # set to color intensity 1-255
 
 def getColor(flightCategory):
     colors = {
@@ -61,7 +61,8 @@ def main():
 
         # Do an animation
         print('    beginning animation...')
-        pixutils.cycle(np, rep_count=1)
+        # pixutils.cycle(np, rep_count=1)
+        pixutils.fade(np)
         pixutils.clear(np)
         print('    animation complete')
 
@@ -73,7 +74,7 @@ def main():
         print(res)
         
         print('    loading jason into metars dictionary...')
-        metars = json.loads(res, )
+        metars = json.loads(res)
         print('    dictionary parsed')
         print(metars)
 
