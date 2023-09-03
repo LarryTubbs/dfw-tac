@@ -17,6 +17,7 @@ def loadMETARs():
     url = 'https://aviationweather.gov/adds/dataserver_current/current/metars.cache.xml'
   
     # creating HTTP response object from given url
+    # TODO: wrap in a retry loop
     resp = requests.get(url, timeout=60)
   
     # saving the xml file
