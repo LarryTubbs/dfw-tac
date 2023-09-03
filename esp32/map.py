@@ -66,6 +66,8 @@ def main():
         if hour >= 3 and hour < 10:
             print('outside working hours (10:00 - 03:00 UTC)')
             pixutils.clear(np)
+            # deep sleep for 6 hours
+            machine.deepsleep(6 * 1000 * 60 * 60) # x * 1000 ms per second * 60 sec per min * 60 min per hour
         else:
             # Do an animation
             print('    beginning animation...')
