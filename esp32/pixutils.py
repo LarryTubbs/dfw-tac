@@ -28,7 +28,7 @@ def bounce(np, rep_count = 4, cycle_time = 60):
         time.sleep_ms(cycle_time)
     clear(np)
 
-def fade(np, cycle_time=10):
+def fade(np, cycle_time=10, red=False):
     n = np.n
     # fade in/out
     for i in range(0, 4 * 256, 8):
@@ -37,7 +37,10 @@ def fade(np, cycle_time=10):
                 val = i & 0xff
             else:
                 val = 255 - (i & 0xff)
-            np[j] = (0, val, 0)
+            if red:
+                np[j] = (val, 0, 0)
+            else:
+                np[j] = (0, val, 0)
         np.write()
         time.sleep_ms(cycle_time)
     clear(np)

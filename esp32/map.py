@@ -69,36 +69,40 @@ def main():
             # deep sleep for 6 hours
             machine.deepsleep(6 * 1000 * 60 * 60) # x * 1000 ms per second * 60 sec per min * 60 min per hour
         else:
-            # Do an animation
-            print('    beginning animation...')
-            # pixutils.cycle(np, rep_count=1)
-            pixutils.fade(np)
-            pixutils.clear(np)
-            print('    animation complete')
+            try:
+                # Do an animation
+                print('    beginning animation...')
+                # pixutils.cycle(np, rep_count=1)
+                pixutils.fade(np)
+                pixutils.clear(np)
+                print('    animation complete')
 
-            # Retrieve the current metars object
-            print('    retrieving current metars.json file...')
-            # res = requests.get(URL)
-            res = http_get(URL)
-            print('    file retrieved')
-            print(res)
-            
-            print('    loading jason into metars dictionary...')
-            metars = json.loads(res)
-            print('    dictionary parsed')
-            print(metars)
+                # Retrieve the current metars object
+                print('    retrieving current metars.json file...')
+                # res = requests.get(URL)
+                res = http_get(URL)
+                print('    file retrieved')
+                print(res)
+                
+                print('    loading jason into metars dictionary...')
+                metars = json.loads(res)
+                print('    dictionary parsed')
+                print(metars)
 
-            # repaint the map
-            print('    repainting the map...')
-            i = 0
-            for itm in STATIONS:
-                try:
-                    np[i] = getColor(metars[itm])
-                except KeyError:
-                    np[i] = (ON, ON, ON)
-                i += 1
-            np.write()
-            print('    map repainted')
+                # repaint the map
+                print('    repainting the map...')
+                i = 0
+                for itm in STATIONS:
+                    try:
+                        np[i] = getColor(metars[itm])
+                    except KeyError:
+                        np[i] = (ON, ON, ON)
+                    i += 1
+                np.write()
+                print('    map repainted')
+            except Exception as ex:
+                print('    Exception: ' + str(ex))
+                pixutils.fade(np, red=True)
 
         print('sleeping until next refresh')
         time.sleep(60 * SLEEP_MIN)
