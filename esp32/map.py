@@ -4,16 +4,17 @@ import time
 import pixutils
 import machine
 import neopixel
+import ntptime
 import socket
 import json
 
 URL = 'http://lrtenigma.z21.web.core.windows.net/AviationWeather/metars.json' 
 PIN = 23
 STATIONS = ['KCPT', 'KGDJ', 'KFWS', 'KGKY', 'KGPM', 'KRBD', 'KLNC', 'KHQZ', 'KF46', 'KADS', 'KDAL',  
-            'KDFW', 'KAFW', 'KFTW', 'KNFW', 'KMWL', 'KXBP', 'KLUD', 'KDTO', 'KTRI', 'KGVT', 'KF00',  
+            'KDFW', 'KAFW', 'KFTW', 'KNFW', 'KMWL', 'KXBP', 'KLUD', 'KDTO', 'KTKI', 'KGVT', 'KF00',  
             'KGYI', 'KGLE', 'K0F2']
-SLEEP_MIN = 5
-ON = 255 # set to color intensity 1-255
+SLEEP_MIN = 20
+ON = 50 # set to color intensity 1-255
 
 def getColor(flightCategory):
     colors = {
@@ -55,40 +56,47 @@ def main():
     np = neopixel.NeoPixel(machine.Pin(PIN), len(STATIONS))
     print('complete')
 
-    # every 5 minutes
+    # every SLEEP_MIN minutes
     while True:
         print('beginning map refresh...')
 
-        # Do an animation
-        print('    beginning animation...')
-        # pixutils.cycle(np, rep_count=1)
-        pixutils.fade(np)
-        pixutils.clear(np)
-        print('    animation complete')
+        # sync the time with a netowrk timeserver
+        ntptime.settime()
+        hour = time.localtime()[3]
+        if hour >= 3 and hour < 10:
+            print('outside working hours (10:00 - 03:00 UTC)')
+            pixutils.clear(np)
+        else:
+            # Do an animation
+            print('    beginning animation...')
+            # pixutils.cycle(np, rep_count=1)
+            pixutils.fade(np)
+            pixutils.clear(np)
+            print('    animation complete')
 
-        # Retrieve the current metars object
-        print('    retrieving current metars.json file...')
-        # res = requests.get(URL)
-        res = http_get(URL)
-        print('    file retrieved')
-        print(res)
-        
-        print('    loading jason into metars dictionary...')
-        metars = json.loads(res)
-        print('    dictionary parsed')
-        print(metars)
+            # Retrieve the current metars object
+            print('    retrieving current metars.json file...')
+            # res = requests.get(URL)
+            res = http_get(URL)
+            print('    file retrieved')
+            print(res)
+            
+            print('    loading jason into metars dictionary...')
+            metars = json.loads(res)
+            print('    dictionary parsed')
+            print(metars)
 
-        # repaint the map
-        print('    repainting the map...')
-        i = 0
-        for itm in STATIONS:
-            try:
-                np[i] = getColor(metars[itm])
-            except KeyError:
-                np[i] = (ON, ON, ON)
-            i += 1
-        np.write()
-        print('    map repainted')
+            # repaint the map
+            print('    repainting the map...')
+            i = 0
+            for itm in STATIONS:
+                try:
+                    np[i] = getColor(metars[itm])
+                except KeyError:
+                    np[i] = (ON, ON, ON)
+                i += 1
+            np.write()
+            print('    map repainted')
 
         print('sleeping until next refresh')
         time.sleep(60 * SLEEP_MIN)

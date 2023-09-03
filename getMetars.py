@@ -5,7 +5,7 @@ import xml.etree.ElementTree as ET
 import uploadMetars
 import time
 
-DURATION = 10 # the amount of time in minutes to wait between uploads
+DURATION = 20 # the amount of time in minutes to wait between uploads
 
 stations = ['K0F2', 'KGLE', 'KGYI', 'KF00', 'KXBP', 'KLUD', 'KDTO', 'KTKI', 'KGVT', 'KAFW', 'KADS', 
             'KF46', 'KFTW', 'KDFW', 'KDAL', 'KMWL', 'KNFW', 'KGKY', 'KGPM', 'KRBD', 'KHQZ', 'KFWS', 
@@ -17,7 +17,7 @@ def loadMETARs():
     url = 'https://aviationweather.gov/adds/dataserver_current/current/metars.cache.xml'
   
     # creating HTTP response object from given url
-    resp = requests.get(url)
+    resp = requests.get(url, timeout=60)
   
     # saving the xml file
     with open('metars.xml', 'wb') as f:
