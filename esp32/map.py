@@ -60,14 +60,21 @@ def main():
     while True:
         print('beginning map refresh...')
 
-        # sync the time with a netowrk timeserver
-        ntptime.settime()
-        hour = time.localtime()[3]
+        try:
+            # sync the time with a netowrk timeserver
+            ntptime.settime()
+            hour = time.localtime()[3]
+        except Exception as ex:
+            print('    Exception: ' + str(ex))
+            hour = 3
+            pixutils.fade(np, red=True)
+        
         if hour >= 3 and hour < 10:
             print('outside working hours (10:00 - 03:00 UTC)')
             pixutils.clear(np)
-            # deep sleep for 6 hours
-            machine.deepsleep(6 * 1000 * 60 * 60) # x * 1000 ms per second * 60 sec per min * 60 min per hour
+            print('sleeping until next refresh')
+            # deep sleep SLEEP_MIN
+            machine.deepsleep(SLEEP_MIN * 1000 * 60) # SLEEP_MIN * 1000 ms per second * 60 sec per min
         else:
             try:
                 # Do an animation
@@ -104,8 +111,8 @@ def main():
                 print('    Exception: ' + str(ex))
                 pixutils.fade(np, red=True)
 
-        print('sleeping until next refresh')
-        time.sleep(60 * SLEEP_MIN)
+            print('sleeping until next refresh')
+            time.sleep(60 * SLEEP_MIN)
 
 if __name__ == "__main__":
   
