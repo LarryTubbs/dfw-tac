@@ -112,7 +112,7 @@ def main():
                 pixutils.fade(np, red=True)
 
             print('sleeping until next refresh')
-            time.sleep(60 * SLEEP_MIN)
+            time.sleep(60 * SLEEP_MIN) # 60 sec per min * SLEEP_MIN
 
 if __name__ == "__main__":
   
