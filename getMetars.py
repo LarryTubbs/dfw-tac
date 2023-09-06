@@ -33,8 +33,9 @@ def parseXML(xmlfile):
     # get root element
     root = tree.getroot()
   
-    # create empty list for metar items
-    metars = {}
+    # create list for metar items
+    with open('metars.json') as f:
+        metars = json.load(f)
   
     # iterate metar items
     for item in root.findall('./data/METAR'):
@@ -48,12 +49,12 @@ def parseXML(xmlfile):
                 metar[child.tag] = child.text
 
   
-        # append metar dictionary to metar items list
+        # update metar dictionary to metar items list
         try:
             if metar['station_id'] in stations:
                 metars[metar['station_id']] = metar['flight_category']
         except KeyError:
-            metars[metar['station_id']] = ''
+            print('flight_category not found: keeping old flight category until update arrives')
             
     # return metar list
     return metars
